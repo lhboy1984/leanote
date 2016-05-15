@@ -3,9 +3,9 @@ package service
 import (
 	"bytes"
 	"fmt"
-	"github.com/leanote/leanote/app/db"
-	"github.com/leanote/leanote/app/info"
-	. "github.com/leanote/leanote/app/lea"
+	"github.com/lhboy1984/leanote/app/db"
+	"github.com/lhboy1984/leanote/app/info"
+	. "github.com/lhboy1984/leanote/app/lea"
 	"gopkg.in/mgo.v2/bson"
 	"html/template"
 	"net/smtp"

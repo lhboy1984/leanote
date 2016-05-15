@@ -2,11 +2,11 @@ package db
 
 import (
 	"fmt"
-	. "github.com/leanote/leanote/app/lea"
+
+	. "github.com/lhboy1984/leanote/app/lea"
 	"github.com/revel/revel"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"strings"
 )
 
 // Init mgo and the common DAO
@@ -58,29 +58,9 @@ var Themes *mgo.Collection
 var Sessions *mgo.Collection
 
 // 初始化时连接数据库
-func Init(url, dbname string) {
-	ok := true
-	config := revel.Config
-	if url == "" {
-		url, ok = config.String("db.url")
-		if !ok {
-			url, ok = config.String("db.urlEnv")
-			if ok {
-				Log("get db conf from urlEnv: " + url)
-			}
-		} else {
-			Log("get db conf from db.url: " + url)
-		}
-
-		if ok {
-			// get dbname from urlEnv
-			urls := strings.Split(url, "/")
-			dbname = urls[len(urls)-1]
-		}
-	}
-	if dbname == "" {
-		dbname, _ = config.String("db.dbname")
-	}
+func Init() {
+	url, ok := revel.Config.String("db.url")
+	dbname, _ := revel.Config.String("db.dbname")
 
 	// get db config from host, port, username, password
 	if !ok {

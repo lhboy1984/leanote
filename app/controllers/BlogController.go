@@ -1,19 +1,14 @@
 package controllers
 
 import (
-	"github.com/revel/revel"
-	"strings"
-	//	"encoding/json"
 	"fmt"
-	"github.com/leanote/leanote/app/info"
-	. "github.com/leanote/leanote/app/lea"
-	"github.com/leanote/leanote/app/lea/blog"
+	"strings"
+
+	"github.com/lhboy1984/leanote/app/info"
+	. "github.com/lhboy1984/leanote/app/lea"
+	"github.com/lhboy1984/leanote/app/lea/blog"
+	"github.com/revel/revel"
 	"gopkg.in/mgo.v2/bson"
-	//	"github.com/leanote/leanote/app/types"
-	//	"io/ioutil"
-	//	"math"
-	//	"os"
-	//	"path"
 )
 
 type Blog struct {

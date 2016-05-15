@@ -1,16 +1,10 @@
 package admin
 
 import (
-	//	"github.com/revel/revel"
-	//	"gopkg.in/mgo.v2/bson"
-	//	"encoding/json"
-	"github.com/leanote/leanote/app/controllers"
-	. "github.com/leanote/leanote/app/lea"
-	//	"io/ioutil"
-	//	"fmt"
-	//	"math"
-	//	"strconv"
 	"strings"
+
+	"github.com/lhboy1984/leanote/app/controllers"
+	. "github.com/lhboy1984/leanote/app/lea"
 )
 
 // 公用Controller, 其它Controller继承它

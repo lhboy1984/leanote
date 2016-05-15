@@ -3,18 +3,19 @@ package service
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/leanote/leanote/app/db"
-	"github.com/leanote/leanote/app/info"
-	. "github.com/leanote/leanote/app/lea"
-	"github.com/leanote/leanote/app/lea/archive"
-	"github.com/revel/revel"
-	"gopkg.in/mgo.v2/bson"
 	"html/template"
 	"io/ioutil"
 	"os"
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/lhboy1984/leanote/app/db"
+	"github.com/lhboy1984/leanote/app/info"
+	. "github.com/lhboy1984/leanote/app/lea"
+	"github.com/lhboy1984/leanote/app/lea/archive"
+	"github.com/revel/revel"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // 主题
@@ -370,8 +371,7 @@ func (this *ThemeService) DeleteTheme(userId, themeId string) (ok bool) {
 // 公开主题, 只有管理员才有权限, 之前没公开的变成公开
 func (this *ThemeService) PublicTheme(userId, themeId string) (ok bool) {
 	// 是否是管理员?
-	userInfo := userService.GetUserInfo(userId)
-	if userInfo.Username == configService.GetAdminUsername() {
+	if userId == configService.GetAdminUserId() {
 		theme := this.GetThemeById(themeId)
 		return db.UpdateByQField(db.Themes, bson.M{"UserId": bson.ObjectIdHex(userId), "_id": bson.ObjectIdHex(themeId)}, "IsDefault", !theme.IsDefault)
 	}

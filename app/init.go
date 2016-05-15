@@ -3,17 +3,6 @@ package app
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/leanote/leanote/app/controllers"
-	"github.com/leanote/leanote/app/controllers/admin"
-	"github.com/leanote/leanote/app/controllers/api"
-	"github.com/leanote/leanote/app/controllers/member"
-	"github.com/leanote/leanote/app/db"
-	. "github.com/leanote/leanote/app/lea"
-	_ "github.com/leanote/leanote/app/lea/binder"
-	"github.com/leanote/leanote/app/lea/i18n"
-	"github.com/leanote/leanote/app/lea/route"
-	"github.com/leanote/leanote/app/service"
-	"github.com/revel/revel"
 	"html/template"
 	"math"
 	"net/url"
@@ -21,6 +10,18 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/lhboy1984/leanote/app/controllers"
+	"github.com/lhboy1984/leanote/app/controllers/admin"
+	"github.com/lhboy1984/leanote/app/controllers/api"
+	"github.com/lhboy1984/leanote/app/controllers/member"
+	"github.com/lhboy1984/leanote/app/db"
+	. "github.com/lhboy1984/leanote/app/lea"
+	_ "github.com/lhboy1984/leanote/app/lea/binder"
+	"github.com/lhboy1984/leanote/app/lea/i18n"
+	"github.com/lhboy1984/leanote/app/lea/route"
+	"github.com/lhboy1984/leanote/app/service"
+	"github.com/revel/revel"
 )
 
 func init() {
@@ -52,14 +53,14 @@ func init() {
 		return template.HTML(str)
 	}
 	revel.TemplateFuncs["trim"] = func(str string) string {
-		str = strings.Trim(str, " ")
+		str = strings.Trim(str, " ")
 		str = strings.Trim(str, " ")
 
 		str = strings.Trim(str, "\n")
 		str = strings.Trim(str, "&nbsp;")
 
 		// 以下两个空格不一样
-		str = strings.Trim(str, " ")
+		str = strings.Trim(str, " ")
 		str = strings.Trim(str, " ")
 		return str
 	}
@@ -239,28 +240,6 @@ func init() {
 		return template.HTML(tagStr)
 	}
 
-	/*
-		revel.TemplateFuncs["blogTags"] = func(tags []string) template.HTML {
-			if tags == nil || len(tags) == 0 {
-				return ""
-			}
-			// TODO 这里判断语言, 从语言包中拿
-			tagMap := map[string]string{"red": "红色", "yellow": "黄色", "blue": "蓝色", "green": "绿色"}
-			tagStr := ""
-			lenTags := len(tags)
-			for i, tag := range tags {
-				if text, ok := tagMap[tag]; ok {
-					tagStr += text
-				} else {
-					tagStr += tag
-				}
-				if i != lenTags - 1 {
-					tagStr += ","
-				}
-			}
-			return template.HTML(tagStr)
-		}
-	*/
 	revel.TemplateFuncs["li"] = func(a string) string {
 		return ""
 	}
@@ -369,43 +348,7 @@ func init() {
 		}
 		return template.HTML("<li class='" + preClass + "'><a href='" + preUrl + "'>Previous</a></li> <li  class='" + nextClass + "'><a href='" + nextUrl + "'>Next</a></li>")
 	}
-	// life
-	// https://groups.google.com/forum/#!topic/golang-nuts/OEdSDgEC7js
-	// http://play.golang.org/p/snygrVpQva
-	// http://grokbase.com/t/gg/golang-nuts/142a6dhfh3/go-nuts-text-template-using-comparison-operators-eq-gt-etc-on-non-existent-variable-causes-the-template-to-stop-outputting-but-with-no-error-correct-behaviour
-	/*
-		revel.TemplateFuncs["gt"] = func(a1, a2 interface{}) bool {
-			switch a1.(type) {
-			case string:
-				switch a2.(type) {
-				case string:
-					return reflect.ValueOf(a1).String() > reflect.ValueOf(a2).String()
-				}
-			case int, int8, int16, int32, int64:
-				switch a2.(type) {
-				case int, int8, int16, int32, int64:
-					return reflect.ValueOf(a1).Int() > reflect.ValueOf(a2).Int()
-				}
-			case uint, uint8, uint16, uint32, uint64:
-				switch a2.(type) {
-				case uint, uint8, uint16, uint32, uint64:
-					return reflect.ValueOf(a1).Uint() > reflect.ValueOf(a2).Uint()
-				}
-			case float32, float64:
-				switch a2.(type) {
-				case float32, float64:
-					return reflect.ValueOf(a1).Float() > reflect.ValueOf(a2).Float()
-				}
-			}
-			return false
-		}
-	*/
 
-	/*
-			{{range $i := N 1 10}}
-		        <div>{{$i}}</div>
-		    {{end}}
-	*/
 	revel.TemplateFuncs["N"] = func(start, end int) (stream chan int) {
 		stream = make(chan int)
 		go func() {
@@ -420,7 +363,7 @@ func init() {
 	// init Email
 	revel.OnAppStart(func() {
 		// 数据库
-		db.Init("", "")
+		db.Init()
 		// email配置
 		InitEmail()
 		InitVd()

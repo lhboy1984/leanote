@@ -1,9 +1,10 @@
 package lea
 
 import (
-	"github.com/revel/revel"
 	"net/smtp"
 	"strings"
+
+	"github.com/revel/revel"
 )
 
 // 发送邮件
@@ -13,11 +14,10 @@ var username = "noreply@leanote.com"
 var password = "---"
 
 func InitEmail() {
-	config := revel.Config
-	host, _ = config.String("email.host")
-	port, _ = config.String("email.port")
-	username, _ = config.String("email.username")
-	password, _ = config.String("email.password")
+	host, _ = revel.Config.String("email.host")
+	port, _ = revel.Config.String("email.port")
+	username, _ = revel.Config.String("email.username")
+	password, _ = revel.Config.String("email.password")
 }
 
 var bodyTpl = `
@@ -62,14 +62,8 @@ func SendEmailOld(to, subject, body string) bool {
 	hp := strings.Split(host, ":")
 	auth := smtp.PlainAuth("", username, password, hp[0])
 
-	var content_type string
-
-	mailtype := "html"
-	if mailtype == "html" {
-		content_type = "Content-Type: text/" + mailtype + "; charset=UTF-8"
-	} else {
-		content_type = "Content-Type: text/plain" + "; charset=UTF-8"
-	}
+	mailtype := "html" // plain
+	content_type := "Content-Type: text/" + mailtype + "; charset=UTF-8"
 
 	//body = strings.Replace(bodyTpl, "$body", body, 1)
 	//body = strings.Replace(body, "$title", title, 1)
@@ -83,9 +77,4 @@ func SendEmailOld(to, subject, body string) bool {
 		return false
 	}
 	return true
-}
-
-func SendToLeanoteOld(subject, title, body string) {
-	to := "leanote@leanote.com"
-	SendEmailOld(to, subject, body)
 }

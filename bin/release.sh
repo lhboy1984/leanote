@@ -6,7 +6,7 @@
 SP=$(cd "$(dirname "$0")"; pwd)
 
 # tmp path to store leanote release files
-tmp="/Users/life/Desktop/leanote_release"
+tmp=$SP
 
 # version
 V="v1.4.2"

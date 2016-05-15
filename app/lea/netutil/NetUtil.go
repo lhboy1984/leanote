@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 	//	"path/filepath"
-	. "github.com/leanote/leanote/app/lea"
+	. "github.com/lhboy1984/leanote/app/lea"
 	"io/ioutil"
 	"net"
 	"net/http"

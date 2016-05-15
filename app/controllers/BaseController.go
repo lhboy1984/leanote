@@ -2,11 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/leanote/leanote/app/info"
-	"github.com/leanote/leanote/app/lea/i18n"
+
+	"github.com/lhboy1984/leanote/app/info"
+	"github.com/lhboy1984/leanote/app/lea/i18n"
 	"github.com/revel/revel"
 	"gopkg.in/mgo.v2/bson"
-	//	. "github.com/leanote/leanote/app/lea"
+	//	. "github.com/lhboy1984/leanote/app/lea"
 	//	"io/ioutil"
 	//	"fmt"
 	"bytes"
@@ -63,29 +64,6 @@ func (c BaseController) GetUsername() string {
 func (c BaseController) GetUserInfo() info.User {
 	if userId, ok := c.Session["UserId"]; ok && userId != "" {
 		return userService.GetUserInfo(userId)
-		/*
-			notebookWidth, _ := strconv.Atoi(c.Session["NotebookWidth"])
-			noteListWidth, _ := strconv.Atoi(c.Session["NoteListWidth"])
-			mdEditorWidth, _ := strconv.Atoi(c.Session["MdEditorWidth"])
-			LogJ(c.Session)
-			user := info.User{UserId: bson.ObjectIdHex(userId),
-				Email: c.Session["Email"],
-				Logo: c.Session["Logo"],
-				Username: c.Session["Username"],
-				UsernameRaw: c.Session["UsernameRaw"],
-				Theme: c.Session["Theme"],
-				NotebookWidth: notebookWidth,
-				NoteListWidth: noteListWidth,
-				MdEditorWidth: mdEditorWidth,
-				}
-			if c.Session["Verified"] == "1" {
-				user.Verified = true
-			}
-			if c.Session["LeftIsMin"] == "1" {
-				user.LeftIsMin = true
-			}
-			return user
-		*/
 	}
 	return info.User{}
 }
@@ -187,14 +165,7 @@ func (c BaseController) E404() revel.Result {
 // 设置本地
 func (c BaseController) SetLocale() string {
 	locale := string(c.Request.Locale) // zh-CN
-	// lang := locale
-	// if strings.Contains(locale, "-") {
-	// 	pos := strings.Index(locale, "-")
-	// 	lang = locale[0:pos]
-	// }
-	// if lang != "zh" && lang != "en" {
-	// 	lang = "en"
-	// }
+
 	lang := locale
 	if !i18n.HasLang(locale) {
 		lang = i18n.GetDefaultLang()
