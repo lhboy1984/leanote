@@ -25,7 +25,6 @@ var fileService *service.FileService
 var attachService *service.AttachService
 var configService *service.ConfigService
 var emailService *service.EmailService
-var upgradeService *service.UpgradeService
 var themeService *service.ThemeService
 
 // 拦截器
@@ -119,7 +118,6 @@ func InitService() {
 	authService = service.AuthS
 	configService = service.ConfigS
 	emailService = service.EmailS
-	upgradeService = service.UpgradeS
 	themeService = service.ThemeS
 }
 

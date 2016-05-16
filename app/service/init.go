@@ -1,14 +1,15 @@
 package service
 
 import (
-	"github.com/lhboy1984/leanote/app/db"
-	. "github.com/lhboy1984/leanote/app/lea"
-	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
 	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/lhboy1984/leanote/app/db"
+	. "github.com/lhboy1984/leanote/app/lea"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // init service, for share service bettween services
@@ -34,7 +35,6 @@ var PwdS *PwdService
 var SuggestionS *SuggestionService
 var emailService, EmailS *EmailService
 var AuthS *AuthService
-var UpgradeS *UpgradeService
 var SessionS, sessionService *SessionService
 var ThemeS, themeService *ThemeService
 
@@ -59,7 +59,6 @@ func InitService() {
 	SuggestionS = &SuggestionService{}
 	AuthS = &AuthService{}
 	EmailS = NewEmailService()
-	UpgradeS = &UpgradeService{}
 	SessionS = &SessionService{}
 	ThemeS = &ThemeService{}
 

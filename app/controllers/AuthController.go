@@ -1,10 +1,11 @@
 package controllers
 
 import (
+	"strings"
+
 	"github.com/lhboy1984/leanote/app/info"
 	. "github.com/lhboy1984/leanote/app/lea"
 	"github.com/revel/revel"
-	"strings"
 	//	"strconv"
 )
 
@@ -30,14 +31,10 @@ func (c Auth) Login(email, from string) revel.Result {
 
 	c.SetLocale()
 
-	if c.Has("demo") {
-		c.RenderArgs["demo"] = true
-		c.RenderArgs["email"] = "demo@leanote.com"
-	}
 	return c.RenderTemplate("home/login.html")
 }
 
-// 为了demo和register
+// 为了register
 func (c Auth) doLogin(email, pwd string) revel.Result {
 	sessionId := c.Session.Id()
 	var msg = ""
@@ -83,21 +80,6 @@ func (c Auth) Logout() revel.Result {
 	sessionService.Clear(sessionId)
 	c.ClearSession()
 	return c.Redirect("/login")
-}
-
-// 体验一下
-func (c Auth) Demo() revel.Result {
-	email := configService.GetGlobalStringConfig("demoUsername")
-	pwd := configService.GetGlobalStringConfig("demoPassword")
-
-	userInfo, err := authService.Login(email, pwd)
-	if err != nil {
-		return c.RenderJson(info.Re{Ok: false})
-	} else {
-		c.SetSession(userInfo)
-		return c.Redirect("/note")
-	}
-	return nil
 }
 
 //--------

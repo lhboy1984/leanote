@@ -1,11 +1,12 @@
 package admin
 
 import (
+	"strconv"
+	"strings"
+
 	"github.com/lhboy1984/leanote/app/info"
 	. "github.com/lhboy1984/leanote/app/lea"
 	"github.com/revel/revel"
-	"strconv"
-	"strings"
 )
 
 // admin 首页
@@ -32,32 +33,6 @@ func (c AdminEmail) DoBlogTag(recommendTags, newTags string) revel.Result {
 
 	re.Ok = configService.UpdateGlobalArrayConfig(c.GetUserId(), "recommendTags", strings.Split(recommendTags, ","))
 	re.Ok = configService.UpdateGlobalArrayConfig(c.GetUserId(), "newTags", strings.Split(newTags, ","))
-
-	return c.RenderJson(re)
-}
-
-// demo
-// blog标签设置
-func (c AdminEmail) Demo() revel.Result {
-	c.RenderArgs["demoUsername"] = configService.GetGlobalStringConfig("demoUsername")
-	c.RenderArgs["demoPassword"] = configService.GetGlobalStringConfig("demoPassword")
-	return c.RenderTemplate("admin/setting/demo.html")
-}
-func (c AdminEmail) DoDemo(demoUsername, demoPassword string) revel.Result {
-	re := info.NewRe()
-
-	userInfo, err := authService.Login(demoUsername, demoPassword)
-	if err != nil {
-		return c.RenderJson(info.Re{Ok: false})
-	}
-	if userInfo.UserId == "" {
-		re.Msg = "The User is Not Exists"
-		return c.RenderJson(re)
-	}
-
-	re.Ok = configService.UpdateGlobalStringConfig(c.GetUserId(), "demoUserId", userInfo.UserId.Hex())
-	re.Ok = configService.UpdateGlobalStringConfig(c.GetUserId(), "demoUsername", demoUsername)
-	re.Ok = configService.UpdateGlobalStringConfig(c.GetUserId(), "demoPassword", demoPassword)
 
 	return c.RenderJson(re)
 }

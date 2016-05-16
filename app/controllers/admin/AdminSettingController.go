@@ -4,8 +4,9 @@ import (
 	"github.com/revel/revel"
 	//	. "github.com/lhboy1984/leanote/app/lea"
 	"fmt"
-	"github.com/lhboy1984/leanote/app/info"
 	"strings"
+
+	"github.com/lhboy1984/leanote/app/info"
 )
 
 // admin 首页
@@ -43,33 +44,6 @@ func (c AdminSetting) ShareNote(registerSharedUserId string,
 
 	re := info.NewRe()
 	re.Ok, re.Msg = configService.UpdateShareNoteConfig(registerSharedUserId, registerSharedNotebookPerms, registerSharedNotePerms, registerSharedNotebookIds, registerSharedNoteIds, registerCopyNoteIds)
-	return c.RenderJson(re)
-}
-
-// demo
-// blog标签设置
-func (c AdminSetting) Demo() revel.Result {
-	c.RenderArgs["demoUsername"] = configService.GetGlobalStringConfig("demoUsername")
-	c.RenderArgs["demoPassword"] = configService.GetGlobalStringConfig("demoPassword")
-	return c.RenderTemplate("admin/setting/demo.html")
-}
-func (c AdminSetting) DoDemo(demoUsername, demoPassword string) revel.Result {
-	re := info.NewRe()
-
-	userInfo, err := authService.Login(demoUsername, demoPassword)
-	if err != nil {
-		fmt.Println(err)
-		return c.RenderJson(info.Re{Ok: false})
-	}
-	if userInfo.UserId == "" {
-		re.Msg = "The User is Not Exists"
-		return c.RenderJson(re)
-	}
-
-	re.Ok = configService.UpdateGlobalStringConfig(c.GetUserId(), "demoUserId", userInfo.UserId.Hex())
-	re.Ok = configService.UpdateGlobalStringConfig(c.GetUserId(), "demoUsername", demoUsername)
-	re.Ok = configService.UpdateGlobalStringConfig(c.GetUserId(), "demoPassword", demoPassword)
-
 	return c.RenderJson(re)
 }
 

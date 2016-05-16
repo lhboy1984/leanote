@@ -3,10 +3,11 @@ package api
 import (
 	"github.com/revel/revel"
 	//	"encoding/json"
+	"time"
+
 	"github.com/lhboy1984/leanote/app/info"
 	. "github.com/lhboy1984/leanote/app/lea"
 	"gopkg.in/mgo.v2/bson"
-	"time"
 	//	"github.com/lhboy1984/leanote/app/types"
 	"io/ioutil"
 	//	"fmt"
@@ -44,10 +45,6 @@ func (c ApiUser) Info() revel.Result {
 // [OK]
 func (c ApiUser) UpdateUsername(username string) revel.Result {
 	re := info.NewApiRe()
-	if c.GetUsername() == "demo" {
-		re.Msg = "cannotUpdateDemo"
-		return c.RenderJson(re)
-	}
 
 	if re.Ok, re.Msg = Vd("username", username); !re.Ok {
 		return c.RenderJson(re)
@@ -61,10 +58,6 @@ func (c ApiUser) UpdateUsername(username string) revel.Result {
 // [OK]
 func (c ApiUser) UpdatePwd(oldPwd, pwd string) revel.Result {
 	re := info.NewApiRe()
-	if c.GetUsername() == "demo" {
-		re.Msg = "cannotUpdateDemo"
-		return c.RenderJson(re)
-	}
 	if re.Ok, re.Msg = Vd("password", oldPwd); !re.Ok {
 		return c.RenderJson(re)
 	}

@@ -443,11 +443,6 @@ func (this *BlogService) ListAllBlogs(userId, tag string, keywords string, isRec
 	if userId != "" {
 		query["UserId"] = bson.ObjectIdHex(userId)
 	}
-	// 不是demo的博客
-	demoUserId := configService.GetGlobalStringConfig("demoUserId")
-	if userId == "" && demoUserId != "" {
-		query["UserId"] = bson.M{"$ne": bson.ObjectIdHex(demoUserId)}
-	}
 
 	if isRecommend {
 		query["IsRecommend"] = isRecommend
@@ -1124,7 +1119,7 @@ func (this *BlogService) GetUserBlogUrl(userBlog *info.UserBlog, username string
 // 得到所有url
 func (this *BlogService) GetBlogUrls(userBlog *info.UserBlog, userInfo *info.User) info.BlogUrls {
 	var indexUrl, postUrl, searchUrl, cateUrl, singleUrl, tagsUrl, archiveUrl, tagPostsUrl string
-	if userBlog.Domain != "" && configService.AllowCustomDomain() { // http://demo.com
+	if userBlog.Domain != "" && configService.AllowCustomDomain() {
 		// ok
 		indexUrl = configService.GetUserUrl(userBlog.Domain)
 		cateUrl = indexUrl + "/cate"     // /xxxxx
@@ -1134,7 +1129,7 @@ func (this *BlogService) GetBlogUrls(userBlog *info.UserBlog, userInfo *info.Use
 		archiveUrl = indexUrl + "/archives"
 		tagsUrl = indexUrl + "/tags"
 		tagPostsUrl = indexUrl + "/tag"
-	} else if userBlog.SubDomain != "" { // demo.leanote.com
+	} else if userBlog.SubDomain != "" {
 		indexUrl = configService.GetUserSubUrl(userBlog.SubDomain)
 		cateUrl = indexUrl + "/cate"     // /xxxxx
 		postUrl = indexUrl + "/post"     // /xxxxx

@@ -212,16 +212,6 @@ function log(o) {
 					<a href="#writing"><span>{{msg . "writingMode"}}</span></a>
 				</div>
 				
-				{{if eq .userInfo.Email "demo@leanote.com"}}
-				{{if .openRegister}}					
-				<div class="pull-right top-nav" id="demoRegister">
-					<span>
-						{{msg . "demoRegister"}}
-					</span>
-				</div>
-				{{end}}
-				{{end}}
-				
 				<!--
 				<ul id="setting" class="pull-right">
 					<li class="dropdown messages">

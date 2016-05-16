@@ -26,7 +26,6 @@ var fileService *service.FileService
 var attachService *service.AttachService
 var configService *service.ConfigService
 var emailService *service.EmailService
-var upgradeService *service.UpgradeService
 
 // 拦截器
 // 不需要拦截的url
@@ -118,7 +117,6 @@ func InitService() {
 	authService = service.AuthS
 	configService = service.ConfigS
 	emailService = service.EmailS
-	upgradeService = service.UpgradeS
 }
 
 func init() {
@@ -127,6 +125,5 @@ func init() {
 	revel.InterceptFunc(AuthInterceptor, revel.BEFORE, &AdminUser{})
 	revel.InterceptFunc(AuthInterceptor, revel.BEFORE, &AdminBlog{})
 	revel.InterceptFunc(AuthInterceptor, revel.BEFORE, &AdminEmail{})
-	revel.InterceptFunc(AuthInterceptor, revel.BEFORE, &AdminUpgrade{})
 	revel.InterceptFunc(AuthInterceptor, revel.BEFORE, &AdminData{})
 }
